@@ -5,6 +5,9 @@
 # This script is merely a wrapper, it specifies envvars for the scripts that do
 # the actual work, then launches them. Only this script should be called directly.
 
+# Uncomment the following line to keep build directories intact.
+export KEEP_TEMP="1"
+
 # envvar HOST_TRIPLET
 #
 # This is used as the host triplet for the cross toolchain.
@@ -17,7 +20,7 @@ export HOST_TRIPLET="i686-w64-mingw32"
 # envvar LIBICONV_URL
 #
 # Specifies the URL of the libiconv source tarball you want to use.
-export LIBICONV_URL="ftp://ftp.wayne.edu/pub/gnu/libiconv/libiconv-1.14.tar.gz"
+export LIBICONV_URL="http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz"
 
 # envvar ZLIB_URL
 #
@@ -47,17 +50,16 @@ export LIBSDL_IMAGE_URL="http://www.libsdl.org/projects/SDL_image/release/SDL_im
 echo "Building UQM dependencies"
 echo ""
 
-. /usr/src/crossbuild/crossbuild_libiconv
-. /usr/src/crossbuild/crossbuild_zlib
-. /usr/src/crossbuild/crossbuild_libogg
-. /usr/src/crossbuild/crossbuild_libvorbis
-. /usr/src/crossbuild/crossbuild_libsdl
-. /usr/src/crossbuild/crossbuild_libsdl-image
+. /uqmdev/scripts/crossbuild/crossbuild_libiconv.sh
+. /uqmdev/scripts/crossbuild/crossbuild_zlib.sh
+. /uqmdev/scripts/crossbuild/crossbuild_libogg.sh
+. /uqmdev/scripts/crossbuild/crossbuild_libvorbis.sh
+. /uqmdev/scripts/crossbuild/crossbuild_libsdl.sh
+. /uqmdev/scripts/crossbuild/crossbuild_libsdl-image.sh
 
 echo ""
 echo "Finished building UQM dependencies"
 
-echo ""
-echo "Perpetrating acts of horrific kludgery against the toolchain"
-
-. /usr/src/crossbuild/toolchain-ugly-hacks
+if [ ! ${KEEP_TEMP} ]; then
+	rm /tmp/*
+fi

@@ -25,12 +25,12 @@ export PKG_CONFIG_PATH=$CROSS_ROOT/lib/pkgconfig
 
 # We need these extra LDFLAGS so UQM will compile properly against
 # libsdl (and find libsdl-image).
-export LDFLAGS="-lmingw32 -lSDLmain"
+export LDFLAGS="-lmingw32 -lSDLmain -L$CROSS_ROOT/lib -lvorbisfile"
 
 # Uncomment this line to turn on HIGHLY verbose debug information
 # (you will want to redirect it to a file with something like
 # ./cross-build.sh uqm 2> build.log
-#export SH="sh -x"
+# export SH="sh -x"
 
 # UQM does not use autoconf and therefore does not know about
 # autoconf host triplets. To fix this we have created symlinks
@@ -42,4 +42,5 @@ export PATH=$CROSS_ROOT/bin:$PATH
 # (according to UQM documentation)
 unset ENV BASH_ENV
 
-./build.sh $@
+env
+LDFLAGS="-lmingw32 -lSDLmain -lvorbisfile -L$CROSS_ROOT/lib:$CROSS_ROOT/libsrc:$CROSS_ROOT/bin" CFLAGS="-l$CROSS_ROOT/include" LD_LIBRARY_PATH=$CROSS_ROOT/lib:$CROSS_ROOT/libsrc:$CROSS_ROOT/bin ./build.sh $@
