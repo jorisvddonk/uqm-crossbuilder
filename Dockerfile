@@ -67,7 +67,3 @@ WORKDIR /uqm
 VOLUME ["/uqm"]
 CMD ["uqm"]
 ENTRYPOINT ["/bin/bash", "/uqmdev/scripts/cross-build.sh"]
-
-
-# Add devstart config
-#ADD devstart.json /devstart.json
