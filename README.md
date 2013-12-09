@@ -1,35 +1,37 @@
-This is a development environment intended to cross-build UQM for Windows within a VM.
+# UQM crossbuilder (mingw), Docker edition #
 
-The following tools are used to provide developers with a streamlined development environment:
-* Vagrant (http://vagrantup.com/)
-* Fabric (http://docs.fabfile.org/en/1.4.3/. Used to control the VM)
+This project contains a Dockerfile which can be used to build an UQM cross compiler image for Docker.
+Said image can be used to crosscompile UQM for Windows, using mingw on an Ubuntu (quantal) machine.
 
-Puppet (http://docs.puppetlabs.com/) is used by Vagrant to provision a Virtual Machine.
+## Usage ##
 
-#Requirements
+Ensure you have Docker installed (see the official Docker documentation)
 
-* Vagrant
-* Fabric
+build the image:
 
-#Usage
+    docker build -t uqmcrossbuilder .
 
-1. fab init
-2. fab download_uqm_src
-3. fab build_uqm
 
-#Installing Fabric on Windows
+run the image (container) to crosscompile UQM (*note: this will expose the UQM source directory on your local machine to the container. The container in turn **will** write to that directory as part of the build process. It might be a good idea to make a backup of your UQM source folder first, just to be sure that nothing bad will happen*):
 
-Installing Fabric on Windows can be difficult. Here's what you need to do:
+    cd YOUR_UQM_SRC_BASEDIR
+    docker run -v `pwd`:/uqm -i uqmcrossbuilder
 
-1. Install Python 2.7
-2. Install pycrypto (get a build from http://www.voidspace.org.uk/python/modules.shtml)
-3. Install pywin32 (get a build from http://sourceforge.net/projects/pywin32/)
-4. Install pip (http://www.pip-installer.org/en/latest/installing.html)
-5. run 'pip install fabric'
+Your UQM source directory should now contain an uqm.exe or uqm-debug.exe file!
 
-# TODOs
+## Advanced options ##
+You can pass some options to the container, like you'd expect when running UQM's build scripts traditionally:
 
-* Support Project 6014, Balance Mod, etc.
-* Move 'dirty hacks' to the default.pp Puppet Provision script
-* Support for configurable mount points (e.g. allow users to mount existing SVN checkouts)
-* Support for NSIS install scripts (for Project 6014)
+    docker run -v `pwd`:/uqm -i uqmcrossbuilder uqm clean
+
+
+## TODOs ##
+
+* Make a copy of the UQM source directories prior to building so that no changes will be written to the user's UQM source tree
+* Clean up / document / test
+* Merge recent changes from [oldlaptop/uqm-crossbuilder](https://github.com/oldlaptop/uqm-crossbuilder) if needed. Not sure.
+
+
+## Attribution ##
+
+Large parts of this project were written by *oldlaptop* and *Roisack*: https://github.com/oldlaptop/uqm-crossbuilder. You might not be able to see their work in here, but that's probably just because of the different folder structure and the offloading of various functionalities to Docker. Trust me, 99% of the hard work in getting a crosscompiler working had been done by them.

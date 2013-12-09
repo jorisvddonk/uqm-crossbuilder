@@ -25,7 +25,7 @@ export LIBICONV_URL="http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz"
 # envvar ZLIB_URL
 #
 # Specifies the URL of the zlib source tarball you want to use.
-export ZLIB_URL="http://zlib.net/zlib-1.2.7.tar.gz"
+export ZLIB_URL="http://pkgs.fedoraproject.org/repo/pkgs/mingw-zlib/zlib-1.2.7.tar.gz/60df6a37c56e7c1366cca812414f7b85/zlib-1.2.7.tar.gz"
 
 # envvar LIBOGG_URL
 #
@@ -45,7 +45,7 @@ export LIBSDL_URL="http://www.libsdl.org/release/SDL-1.2.15.tar.gz"
 # envvar LIBSDL_IMAGE_URL
 #
 # Specifies the URL of the libsdl_image source tarball you want to use.
-export LIBSDL_IMAGE_URL="http://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12.tar.gz"
+export LIBSDL_IMAGE_URL="http://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.8.tar.gz"
 
 echo "Building UQM dependencies"
 echo ""
